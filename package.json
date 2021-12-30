@@ -8,7 +8,7 @@
     "npm": ">=7.0.0"
   },
   "scripts": {
-    "test": "node test/",
+    "test": "ts-node test/index.ts",
     "lint": "eslint ./src/**/*.ts",
     "lint:fix": "eslint ./src/**/*.ts --fix",
     "build": "tsc",
@@ -31,6 +31,7 @@
     "discord-interactions"
   ],
   "dependencies": {
+    "eventemitter2": "^6.4.5",
     "fastify": "^3.25.3",
     "snowtransfer": "^0.3.3",
     "tweetnacl": "^1.0.3"
@@ -38,8 +39,10 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.8.1",
     "@typescript-eslint/parser": "^5.8.1",
+    "dotenv": "^10.0.0",
     "eslint": "^8.5.0",
     "husky": "^7.0.0",
+    "ts-node": "^10.4.0",
     "typescript": "^4.5.4"
   }
 }
