@@ -1,0 +1,17 @@
+# node_modules (1TB)
+node_modules/
+
+# log files
+*.log
+npm-debug.log*
+
+# secret files
+.env
+
+# dist
+dist/
+
+# intellijs and mac users
+.tmp/
+.idea/
+.DS_Store

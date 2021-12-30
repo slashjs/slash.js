@@ -1,0 +1,45 @@
+{
+  "name": "slash.js",
+  "version": "0.0.1",
+  "description": "Discord library focused to Interactions",
+  "main": "dist/index.js",
+  "engines": {
+    "node": ">=16.6.0",
+    "npm": ">=7.0.0"
+  },
+  "scripts": {
+    "test": "node test/",
+    "lint": "eslint ./src/**/*.ts",
+    "lint:fix": "eslint ./src/**/*.ts --fix",
+    "build": "tsc",
+    "build:watch": "tsc -w",
+    "prepare": "husky install"
+  },
+  "author": "Drylozu",
+  "contributors": [
+    "MARCROCK22",
+    "socram03"
+  ],
+  "license": "Apache-2.0",
+  "keywords": [
+    "api",
+    "server",
+    "discord",
+    "discordapp",
+    "discord-api",
+    "interactions",
+    "discord-interactions"
+  ],
+  "dependencies": {
+    "fastify": "^3.25.3",
+    "snowtransfer": "^0.3.3",
+    "tweetnacl": "^1.0.3"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.8.1",
+    "@typescript-eslint/parser": "^5.8.1",
+    "eslint": "^8.5.0",
+    "husky": "^7.0.0",
+    "typescript": "^4.5.4"
+  }
+}
