@@ -1,3 +1,5 @@
+export * from './CommandOptions';
+
 export * from './interfaces/BaseInteraction';
 
 export * from './Interaction';

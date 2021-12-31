@@ -3,18 +3,21 @@ import type {
     APIChatInputApplicationCommandInteraction,
     APIApplicationCommandInteractionDataOption
 } from 'discord-api-types';
-import { BaseCommandInteraction } from '.';
+import { CommandOptions, BaseCommandInteraction } from '.';
 import { FastifyReply } from 'fastify';
 import { Server } from '../Server';
 
 export class CommandInteraction extends BaseCommandInteraction {
-    public options: APIApplicationCommandInteractionDataOption[];
+    public rawOptions: APIApplicationCommandInteractionDataOption[];
     public resolved: APIChatInputApplicationCommandInteractionDataResolved;
+    public options: CommandOptions;
 
     constructor(client: Server, data: APIChatInputApplicationCommandInteraction, reply: FastifyReply) {
         super(client, data, reply);
 
-        this.options = data.data.options ?? [];
+        this.rawOptions = data.data.options ?? [];
         this.resolved = data.data.resolved ?? {};
+
+        this.options = new CommandOptions(this.rawOptions, this.resolved);
     }
 }

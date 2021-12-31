@@ -26,5 +26,6 @@ module.exports = {
         }],
         quotes: 'off',
         '@typescript-eslint/quotes': ['error', 'single']
-    }
+    },
+    exclude: ['dist', 'node_modules']
 };

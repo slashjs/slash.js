@@ -10,14 +10,14 @@ import { Interaction } from '..';
 
 export class BaseCommandInteraction extends Interaction {
     public commandId: Snowflake;
-    public commandName: string;
-    public resolved?: APIChatInputApplicationCommandInteractionDataResolved | APIUserApplicationCommandInteractionDataResolved | APIMessageApplicationCommandInteractionDataResolved;
+    public name: string;
+    public resolved: APIChatInputApplicationCommandInteractionDataResolved | APIUserApplicationCommandInteractionDataResolved | APIMessageApplicationCommandInteractionDataResolved;
 
     constructor(client: Server, data: APIApplicationCommandInteraction, reply: FastifyReply) {
         super(client, data, reply);
 
         this.commandId = data.data.id;
-        this.commandName = data.data.name;
-        this.resolved = data.data.resolved;
+        this.name = data.data.name;
+        this.resolved = data.data.resolved ?? {};
     }
 }

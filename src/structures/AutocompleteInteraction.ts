@@ -5,23 +5,26 @@ import {
     APIChatInputApplicationCommandInteractionDataResolved,
     InteractionResponseType
 } from 'discord-api-types';
+import { BaseInteraction, CommandOptions } from '.';
 import { FastifyReply } from 'fastify';
-import { BaseInteraction } from '.';
 import { Server } from '../Server';
 
 export class AutocompleteInteraction extends BaseInteraction {
     public commandId: string;
     public commandName: string;
-    public options: APIApplicationCommandInteractionDataOption[];
+    public rawOptions: APIApplicationCommandInteractionDataOption[];
     public resolved: APIChatInputApplicationCommandInteractionDataResolved;
+    public options: CommandOptions;
 
     constructor(client: Server, data: APIAutocompleteApplicationCommandInteraction, reply: FastifyReply) {
         super(client, data, reply);
 
         this.commandId = data.data.id;
         this.commandName = data.data.name;
-        this.options = data.data.options ?? [];
+        this.rawOptions = data.data.options ?? [];
         this.resolved = data.data.resolved ?? {};
+
+        this.options = new CommandOptions(this.rawOptions, this.resolved);
     }
 
     public async send(choices: APIApplicationCommandOptionChoice[]): Promise<void> {
