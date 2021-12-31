@@ -11,3 +11,5 @@ export const DefaultOptions: ServerOptions = {
     token: '',
     path: '/'
 };
+
+export const DiscordEpoch = 1_420_070_400_000n;

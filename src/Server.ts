@@ -1,6 +1,12 @@
+import {
+    APIChatInputApplicationCommandInteraction, APIInteraction,
+    ApplicationCommandType, InteractionResponseType, InteractionType
+} from 'discord-api-types';
 import fastify, { FastifyInstance, FastifyReply, FastifyRequest, HookHandlerDoneFunction } from 'fastify';
-import { InteractionCallbackTypes, InteractionTypes, RawInteraction, ServerEvents, ServerOptions } from './typings';
+import { APIAutocompleteApplicationCommandInteraction, ServerEvents, ServerOptions } from './typings';
+import { AutocompleteInteraction, CommandInteraction } from './structures';
 import { EventEmitter2, ListenerFn } from 'eventemitter2';
+import { SnowTransfer } from '@slash.js/rest';
 import { DefaultOptions } from './constan';
 import nacl from 'tweetnacl';
 
@@ -13,13 +19,18 @@ export interface Server {
 
 export class Server extends EventEmitter2 {
     private options: ServerOptions;
-    app: FastifyInstance;
-    ready = false;
+    public app: FastifyInstance;
+    public rest: SnowTransfer;
+    public ready = false;
 
     constructor(options: Omit<ServerOptions, 'port' | 'host'>) {
         super();
 
         this.options = Object.assign({}, DefaultOptions, options);
+
+        this.rest = new SnowTransfer(this.options.token, {
+            disableEveryone: this.options.disableEveryone
+        });
 
         if (this.options.app instanceof fastify) {
             this.app = this.options.app;
@@ -50,6 +61,8 @@ export class Server extends EventEmitter2 {
 
             done();
         });
+
+        this.emit('debug', 'Registered routes and error hook.');
     }
 
     private isVerified(req: FastifyRequest, reply: FastifyReply, done: HookHandlerDoneFunction): void {
@@ -62,24 +75,43 @@ export class Server extends EventEmitter2 {
         reply.code(401).send('Unauthorized');
     }
 
-    private handle(req: FastifyRequest<{ Body: RawInteraction; }>, reply: FastifyReply) {
+    private handle(req: FastifyRequest<{ Body: APIInteraction; }>, reply: FastifyReply) {
         this.emit('raw', req.body);
+        this.emit('debug', 'Handling interaction with type ' + req.body.type);
 
         switch (req.body.type) {
-            case InteractionTypes.PING:
+            case InteractionType.Ping:
                 this.emit('ping');
                 reply.send({
-                    type: InteractionCallbackTypes.PONG
+                    type: InteractionResponseType.Pong
                 });
+                break;
+            case InteractionType.ApplicationCommand:
+                switch (req.body.data.type) {
+                    case ApplicationCommandType.ChatInput:
+                        this.emit('command', new CommandInteraction(this, req.body as APIChatInputApplicationCommandInteraction, reply));
+                        break;
+                    default:
+                        this.emit('debug', 'Received unknown or unsupported command interaction with data.type ' + req.body.data.type);
+                        break;
+                }
+                break;
+            case InteractionType.ApplicationCommandAutocomplete:
+                this.emit('autocomplete', new AutocompleteInteraction(this, req.body as APIAutocompleteApplicationCommandInteraction, reply));
+                break;
+            default:
+                this.emit('debug', 'Received unknown or unsupported interaction with type ' + req.body.type);
                 break;
         }
     }
 
-    async start() {
+    public async start() {
+        this.emit('debug', `Trying to start server on host ${this.options.host} and port ${this.options.port}...`);
         try {
             await this.app.listen(this.options.port, this.options.host);
             this.ready = true;
             this.emit('ready');
+            this.emit('debug', 'Server started.');
         } catch (e) {
             this.emit('error', e);
             return Promise.reject(e);

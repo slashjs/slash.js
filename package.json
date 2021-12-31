@@ -1,5 +1,5 @@
 {
-  "name": "slash.js",
+  "name": "@slash.js/core",
   "version": "0.0.1",
   "description": "Discord library focused to Interactions",
   "main": "dist/index.js",
@@ -31,12 +31,14 @@
     "discord-interactions"
   ],
   "dependencies": {
+    "@slash.js/rest": "^1.0.1",
+    "discord-api-types": "^0.26.0",
     "eventemitter2": "^6.4.5",
     "fastify": "^3.25.3",
-    "snowtransfer": "^0.3.3",
     "tweetnacl": "^1.0.3"
   },
   "devDependencies": {
+    "@types/node": "^17.0.5",
     "@typescript-eslint/eslint-plugin": "^5.8.1",
     "@typescript-eslint/parser": "^5.8.1",
     "dotenv": "^10.0.0",
