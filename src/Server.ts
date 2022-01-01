@@ -81,7 +81,7 @@ export class Server extends EventEmitter2 {
     }
 
     private handle(req: FastifyRequest<{ Body: APIInteraction; }>, reply: FastifyReply) {
-        this.emit('raw', req.body);
+        this.emit('raw', req.body, reply);
         this.emit('debug', 'Handling interaction with type ' + req.body.type);
 
         switch (req.body.type) {

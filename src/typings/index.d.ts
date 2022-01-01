@@ -3,7 +3,7 @@ import type {
     APIBaseInteraction, InteractionType
 } from 'discord-api-types';
 import type { AutocompleteInteraction, CommandInteraction } from '..';
-import type { FastifyInstance, FastifyServerOptions } from 'fastify';
+import type { FastifyInstance, FastifyServerOptions, FastifyReply } from 'fastify';
 
 export interface ServerOptions {
     // fastify/server options
@@ -24,7 +24,7 @@ export interface ServerEvents {
     ready(): unknown;
     error(error: unknown): unknown;
     debug(message: string): unknown;
-    raw(data: APIInteraction): unknown;
+    raw(data: APIInteraction, reply: FastifyReply): unknown;
     ping(): unknown;
     command(command: CommandInteraction): unknown;
     autocomplete(interaction: AutocompleteInteraction): unknown;
