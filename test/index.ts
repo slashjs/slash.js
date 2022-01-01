@@ -3,6 +3,7 @@ dotenv.config();
 
 import { ApplicationCommandOptionType } from 'discord-api-types';
 import { Server } from '../src';
+import { Embed } from '../src/structures/Embed';
 
 const server = new Server({
   path: '/',
@@ -40,14 +41,14 @@ server
           case 'user': {
             const user = command.options.getUser('user')!;
             await command.reply({
-              embeds: [{
-                color: 0xFFFF99,
-                title: `${user.username}#${user.discriminator}'s information`,
-                description: `ID: ${user.id}\nAvatar: <${'https://cdn.discordapp.com/avatars/' + user.id + '/' + user.avatar + '.png'}>\nBot: ${user.bot}`,
-                image: {
-                  url: 'https://cdn.discordapp.com/avatars/' + user.id + '/' + user.avatar + '.png'
-                }
-              }]
+              embeds: [
+                new Embed()
+                .setColor(0xFFFF99)
+                .setTitle(`${user.username}#${user.discriminator}'s information`)
+                .setDescription(`ID: ${user.id}\nAvatar: <${'https://cdn.discordapp.com/avatars/' + user.id + '/' + user.avatar + '.png'}>\nBot: ${user.bot ?? 'false'}`)
+                .setImage(`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`)
+                .toJSON()
+              ]
             });
             break;
           }
