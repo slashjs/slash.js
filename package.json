@@ -2,7 +2,8 @@
   "name": "@slash.js/core",
   "version": "0.0.1",
   "description": "Discord library focused to Interactions",
-  "main": "dist/index.js",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "engines": {
     "node": ">=16.6.0",
     "npm": ">=7.0.0"
