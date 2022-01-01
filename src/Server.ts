@@ -10,6 +10,11 @@ import { SnowTransfer } from '@slash.js/rest';
 import { DefaultOptions } from './constan';
 import nacl from 'tweetnacl';
 
+interface InternalOptions extends ServerOptions {
+    port: number;
+    host: string;
+}
+
 export interface Server {
     on<E extends keyof ServerEvents>(event: E, listener: ServerEvents[E]): this;
     on(event: string, listener: ListenerFn, options?: boolean): this;
@@ -18,15 +23,15 @@ export interface Server {
 }
 
 export class Server extends EventEmitter2 {
-    private options: ServerOptions;
+    private options: InternalOptions;
     public app: FastifyInstance;
     public rest: SnowTransfer;
     public ready = false;
 
-    constructor(options: Omit<ServerOptions, 'port' | 'host'>) {
+    constructor(options: ServerOptions) {
         super();
 
-        this.options = Object.assign({}, DefaultOptions, options);
+        this.options = Object.assign({}, DefaultOptions, options) as InternalOptions;
 
         this.rest = new SnowTransfer(this.options.token, {
             disableEveryone: this.options.disableEveryone

@@ -39,6 +39,7 @@ server
       case 'info':
         switch (command.options.getSubcommand()) {
           case 'user': {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             const user = command.options.getUser('user')!;
             await command.reply({
               embeds: [
@@ -53,6 +54,7 @@ server
             break;
           }
           case 'channel': {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             const channel = command.options.getChannel('channel')!;
             console.log(channel);
             if (channel.type !== 0) return;

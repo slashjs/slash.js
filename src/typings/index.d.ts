@@ -10,8 +10,8 @@ export interface ServerOptions {
     app?: FastifyInstance;
     fastifyOptions?: FastifyServerOptions;
     autoStart?: boolean;
-    port: number;
-    host: string;
+    port?: number;
+    host?: string;
 
     // General slash.js options
     disableEveryone?: boolean;

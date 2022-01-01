@@ -12,7 +12,6 @@ export const DefaultOptions: ServerOptions = {
     path: '/'
 };
 
-
 export const Colors = {
     DEFAULT: 0x000000,
     WHITE: 0xffffff,
@@ -44,6 +43,6 @@ export const Colors = {
     GREYPLE: 0x99aab5,
     DARK_BUT_NOT_BLACK: 0x2c2f33,
     NOT_QUITE_BLACK: 0x23272a,
-}
+};
 
 export const DiscordEpoch = 1_420_070_400_000n;
