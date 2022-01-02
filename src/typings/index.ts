@@ -1,6 +1,7 @@
 import type {
     APIInteraction, APIInteractionResponseCallbackData,
-    APIBaseInteraction, InteractionType
+    APIBaseInteraction, InteractionType,
+    APIChatInputApplicationCommandInteractionData
 } from 'discord-api-types';
 import type { AutocompleteInteraction, CommandInteraction } from '..';
 import type { FastifyInstance, FastifyServerOptions, FastifyReply } from 'fastify';
@@ -40,4 +41,4 @@ export type InteractionReplyData = APIInteractionResponseCallbackData & {
     files?: File[];
 };
 
-export type APIAutocompleteApplicationCommandInteraction = APIBaseInteraction<InteractionType.ApplicationCommandAutocomplete, Data> & Required<Pick<APIBaseInteraction<InteractionType.ApplicationCommandAutocomplete, Data>, 'data'>>;
+export type APIAutocompleteApplicationCommandInteraction = APIBaseInteraction<InteractionType.ApplicationCommandAutocomplete, APIChatInputApplicationCommandInteractionData> & Required<Pick<APIBaseInteraction<InteractionType.ApplicationCommandAutocomplete, APIChatInputApplicationCommandInteractionData>, 'data'>>;
