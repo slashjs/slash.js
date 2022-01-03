@@ -32,6 +32,9 @@
     "interactions",
     "discord-interactions"
   ],
+  "files": [
+    "src"
+  ],
   "dependencies": {
     "@slash.js/rest": "^1.0.1",
     "discord-api-types": "^0.26.0",
