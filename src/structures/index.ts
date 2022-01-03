@@ -1,3 +1,5 @@
+export * from './Embed';
+
 export * from './CommandOptions';
 
 export * from './interfaces/BaseInteraction';
