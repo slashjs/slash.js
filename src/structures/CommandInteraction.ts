@@ -1,7 +1,8 @@
 import type {
     APIChatInputApplicationCommandInteractionDataResolved,
     APIChatInputApplicationCommandInteraction,
-    APIApplicationCommandInteractionDataOption
+    APIApplicationCommandInteractionDataOption,
+    APIApplicationCommandInteractionData
 } from 'discord-api-types';
 import { CommandOptions, BaseCommandInteraction } from '.';
 import { FastifyReply } from 'fastify';
@@ -11,6 +12,8 @@ export class CommandInteraction extends BaseCommandInteraction {
     public rawOptions: APIApplicationCommandInteractionDataOption[];
     public resolved: APIChatInputApplicationCommandInteractionDataResolved;
     public options: CommandOptions;
+    public readonly data?: APIApplicationCommandInteractionData;
+
 
     constructor(client: Server, data: APIChatInputApplicationCommandInteraction, reply: FastifyReply) {
         super(client, data, reply);
