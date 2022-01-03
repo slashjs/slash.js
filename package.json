@@ -15,7 +15,7 @@
     "build": "tsc",
     "build:watch": "tsc -w",
     "prepare": "husky install",
-    "postinstall": "npm run build"
+    "install": "npm run build"
   },
   "author": "Drylozu",
   "contributors": [
@@ -31,9 +31,6 @@
     "discord-api",
     "interactions",
     "discord-interactions"
-  ],
-  "files": [
-    "src"
   ],
   "dependencies": {
     "@slash.js/rest": "^1.0.1",
