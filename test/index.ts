@@ -78,6 +78,28 @@ server
       value: 'no',
       name: 'This is a no option'
     }]);
+  })
+  .on('contextMenu', interaction => {
+    if (interaction.isUserContext()) {
+      interaction.reply({
+        content: interaction.target.username
+      });
+    }
+    else {
+      interaction;
+    }
   });
+
+server.rest.interaction.bulkOverwriteGuildApplicationCommand('829828127399870504', '901244976770465842', [{
+  type: 2,
+  name: 'test',
+}, {
+  type: 3,
+  name: 'test message',
+}])
+  .then(() => {
+    console.log('Bulk overwritten!');
+  })
+  .catch(console.error);
 
 server.start();
