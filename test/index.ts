@@ -86,7 +86,7 @@ server
       });
     } else if (interaction.isMessageContext()) {
       interaction.reply({
-        content: interaction.target.content
+        content: interaction.target.content || 'no-content'
       });
     }
   });

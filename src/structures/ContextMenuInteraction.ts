@@ -34,10 +34,10 @@ export class ContextMenuInteraction extends BaseCommandInteraction {
     }
 }
 
-type UserContextInteraction = ContextMenuInteraction & {
+export type UserContextInteraction = ContextMenuInteraction & {
     readonly target: APIUser;
 };
 
-type MessageContextInteraction = ContextMenuInteraction & {
+export type MessageContextInteraction = ContextMenuInteraction & {
     readonly target: APIMessage;
 };
