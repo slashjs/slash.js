@@ -5,6 +5,7 @@ import type {
 } from 'discord-api-types';
 import type { AutocompleteInteraction, CommandInteraction, ContextMenuInteraction } from '..';
 import type { FastifyInstance, FastifyServerOptions, FastifyReply } from 'fastify';
+import { ComponentInteraction } from '../structures/ComponentInteraction';
 
 export interface ServerOptions {
     // fastify/server options
@@ -30,6 +31,7 @@ export interface ServerEvents {
     command(command: CommandInteraction): unknown;
     autocomplete(interaction: AutocompleteInteraction): unknown;
     contextMenu(interaction: ContextMenuInteraction): unknown;
+    component(interaction: ComponentInteraction): unknown;
 }
 
 export interface File {

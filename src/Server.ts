@@ -1,8 +1,9 @@
 import {
     APIChatInputApplicationCommandInteraction, APIInteraction,
     APIMessageApplicationCommandInteraction,
+    APIMessageComponentInteraction,
     APIUserApplicationCommandInteraction,
-    ApplicationCommandType, InteractionResponseType, InteractionType
+    ApplicationCommandType, ComponentType, InteractionResponseType, InteractionType
 } from 'discord-api-types';
 import fastify, { FastifyInstance, FastifyReply, FastifyRequest, HookHandlerDoneFunction } from 'fastify';
 import { APIAutocompleteApplicationCommandInteraction, ServerEvents, ServerOptions } from './typings';
@@ -11,6 +12,7 @@ import { EventEmitter2, ListenerFn } from 'eventemitter2';
 import { SnowTransfer } from '@slash.js/rest';
 import { DefaultOptions } from './constan';
 import nacl from 'tweetnacl';
+import { ComponentInteraction } from './structures/ComponentInteraction';
 
 interface InternalOptions extends ServerOptions {
     port: number;
@@ -107,10 +109,23 @@ export class Server extends EventEmitter2 {
                         break;
                 }
                 break;
+            case InteractionType.MessageComponent:
+                switch (req.body.data.component_type) {
+                    case ComponentType.Button:
+                        req.body;
+                        this.emit('component', new ComponentInteraction(this, req.body as APIMessageComponentInteraction, reply));
+                        break;
+                    default:
+                        this.emit('debug', `Received unknown or unsupported message component interaction with data.component_type ${(req.body.data as { component_type: number; }).component_type}`);
+                        break;
+                }
+                break;
             case InteractionType.ApplicationCommandAutocomplete:
                 this.emit('autocomplete', new AutocompleteInteraction(this, req.body as APIAutocompleteApplicationCommandInteraction, reply));
                 break;
             default:
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                //@ts-ignore
                 this.emit('debug', 'Received unknown or unsupported interaction with type ' + req.body.type);
                 break;
         }
