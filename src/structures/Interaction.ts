@@ -1,6 +1,6 @@
 import { APIMessage, InteractionResponseType, APIInteractionResponse } from 'discord-api-types';
 import { InteractionReplyData } from '../typings';
-import { BaseInteraction } from '.';
+import { BaseInteraction, Embed } from '.';
 import FormData from 'form-data';
 
 export class Interaction extends BaseInteraction {
@@ -42,13 +42,20 @@ export class Interaction extends BaseInteraction {
             delete data.files;
         }
         return this.rawReply({
-            data, type: InteractionResponseType.ChannelMessageWithSource
+            data: {
+                ...data,
+                embeds: data.embeds?.map((e) => e instanceof Embed ? e.toJSON() : e)
+            },
+            type: InteractionResponseType.ChannelMessageWithSource
         }, files);
     }
 
     public editReply(data: InteractionReplyData): Promise<APIMessage> {
         if (!this.res.sent) throw new Error('Interaction can not be edited.');
-        return this.client.rest.interaction.editOriginalInteractionResponse(this.applicationId, this.token, data);
+        return this.client.rest.interaction.editOriginalInteractionResponse(this.applicationId, this.token, {
+            ...data,
+            embeds: data.embeds?.map((e) => e instanceof Embed ? e.toJSON() : e)
+        });
     }
 
     public deleteReply(): Promise<void> {

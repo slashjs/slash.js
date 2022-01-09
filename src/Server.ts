@@ -1,10 +1,12 @@
 import {
     APIChatInputApplicationCommandInteraction, APIInteraction,
+    APIMessageApplicationCommandInteraction,
+    APIUserApplicationCommandInteraction,
     ApplicationCommandType, InteractionResponseType, InteractionType
 } from 'discord-api-types';
 import fastify, { FastifyInstance, FastifyReply, FastifyRequest, HookHandlerDoneFunction } from 'fastify';
 import { APIAutocompleteApplicationCommandInteraction, ServerEvents, ServerOptions } from './typings';
-import { AutocompleteInteraction, CommandInteraction } from './structures';
+import { AutocompleteInteraction, CommandInteraction, ContextMenuInteraction } from './structures';
 import { EventEmitter2, ListenerFn } from 'eventemitter2';
 import { SnowTransfer } from '@slash.js/rest';
 import { DefaultOptions } from './constan';
@@ -96,8 +98,12 @@ export class Server extends EventEmitter2 {
                     case ApplicationCommandType.ChatInput:
                         this.emit('command', new CommandInteraction(this, req.body as APIChatInputApplicationCommandInteraction, reply));
                         break;
+                    case ApplicationCommandType.Message:
+                    case ApplicationCommandType.User:
+                        this.emit('contextMenu', new ContextMenuInteraction(this, req.body as APIMessageApplicationCommandInteraction | APIUserApplicationCommandInteraction, reply));
+                        break;
                     default:
-                        this.emit('debug', 'Received unknown or unsupported command interaction with data.type ' + req.body.data.type);
+                        this.emit('debug', `Received unknown or unsupported command interaction with data.type ${(req.body.data as { type: number; }).type}`);
                         break;
                 }
                 break;

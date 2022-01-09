@@ -3,7 +3,7 @@ import type {
     APIBaseInteraction, InteractionType,
     APIChatInputApplicationCommandInteractionData
 } from 'discord-api-types';
-import type { AutocompleteInteraction, CommandInteraction } from '..';
+import type { AutocompleteInteraction, CommandInteraction, ContextMenuInteraction } from '..';
 import type { FastifyInstance, FastifyServerOptions, FastifyReply } from 'fastify';
 
 export interface ServerOptions {
@@ -29,6 +29,7 @@ export interface ServerEvents {
     ping(): unknown;
     command(command: CommandInteraction): unknown;
     autocomplete(interaction: AutocompleteInteraction): unknown;
+    contextMenu(interaction: ContextMenuInteraction): unknown;
 }
 
 export interface File {

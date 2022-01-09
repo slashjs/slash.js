@@ -8,4 +8,5 @@ export * from './Interaction';
 export * from './interfaces/BaseCommandInteraction';
 
 export * from './CommandInteraction';
+export * from './ContextMenuInteraction';
 export * from './AutocompleteInteraction';

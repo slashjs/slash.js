@@ -11,9 +11,8 @@ import { Server } from '../Server';
 export class CommandInteraction extends BaseCommandInteraction {
     public rawOptions: APIApplicationCommandInteractionDataOption[];
     public resolved: APIChatInputApplicationCommandInteractionDataResolved;
+    public readonly data!: APIApplicationCommandInteractionData;
     public options: CommandOptions;
-    public readonly data?: APIApplicationCommandInteractionData;
-
 
     constructor(client: Server, data: APIChatInputApplicationCommandInteraction, reply: FastifyReply) {
         super(client, data, reply);
