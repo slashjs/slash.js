@@ -3,9 +3,11 @@ import type {
     APIBaseInteraction, InteractionType,
     APIChatInputApplicationCommandInteractionData
 } from 'discord-api-types';
-import type { AutocompleteInteraction, CommandInteraction, ContextMenuInteraction } from '..';
+import type {
+    AutocompleteInteraction, ButtonInteraction,
+    CommandInteraction, ContextMenuInteraction, SelectMenuInteraction
+} from '..';
 import type { FastifyInstance, FastifyServerOptions, FastifyReply } from 'fastify';
-import { ComponentInteraction } from '../structures/ComponentInteraction';
 
 export interface ServerOptions {
     // fastify/server options
@@ -31,7 +33,8 @@ export interface ServerEvents {
     command(command: CommandInteraction): unknown;
     autocomplete(interaction: AutocompleteInteraction): unknown;
     contextMenu(interaction: ContextMenuInteraction): unknown;
-    component(interaction: ComponentInteraction): unknown;
+    button(interaction: ButtonInteraction): unknown;
+    selectMenu(interaction: SelectMenuInteraction): unknown;
 }
 
 export interface File {
