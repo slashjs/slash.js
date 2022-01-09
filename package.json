@@ -12,7 +12,7 @@
     "test": "ts-node test/index.ts",
     "lint": "eslint ./src/**/*.ts",
     "lint:fix": "eslint ./src/**/*.ts --fix",
-    "build": "tsc",
+    "build": "npx tsc",
     "build:watch": "tsc -w",
     "prepare": "husky install",
     "install": "npm run build"
