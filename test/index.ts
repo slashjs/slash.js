@@ -86,7 +86,16 @@ server
       });
     } else if (interaction.isMessageContext()) {
       interaction.reply({
-        content: interaction.target.content || 'no-content'
+        content: interaction.target.content || 'no-content',
+        components: [{
+          type: 1,
+          components: [{
+            type: 2,
+            custom_id: 'id_jaja',
+            style: 4,
+            label: 'Jaja google.com'
+          }]
+        }]
       });
     }
   });
