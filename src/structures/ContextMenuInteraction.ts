@@ -7,9 +7,9 @@ import {
     APIUserApplicationCommandInteractionData,
     APIUser, APIMessage, ApplicationCommandType
 } from 'discord-api-types';
+import type { FastifyReply } from 'fastify';
 import { BaseCommandInteraction } from '.';
-import { FastifyReply } from 'fastify';
-import { Server } from '../Server';
+import type { Server } from '../Server';
 
 export class ContextMenuInteraction extends BaseCommandInteraction {
     public readonly resolved: APIUserApplicationCommandInteractionDataResolved | APIMessageApplicationCommandInteractionDataResolved;

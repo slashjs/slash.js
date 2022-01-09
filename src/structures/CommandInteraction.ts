@@ -5,8 +5,8 @@ import type {
     APIApplicationCommandInteractionData
 } from 'discord-api-types';
 import { CommandOptions, BaseCommandInteraction } from '.';
-import { FastifyReply } from 'fastify';
-import { Server } from '../Server';
+import type { FastifyReply } from 'fastify';
+import type { Server } from '../Server';
 
 export class CommandInteraction extends BaseCommandInteraction {
     public rawOptions: APIApplicationCommandInteractionDataOption[];

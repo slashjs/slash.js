@@ -1,5 +1,6 @@
 import { APIMessage, InteractionResponseType, APIInteractionResponse } from 'discord-api-types';
-import { InteractionReplyData } from '../typings';
+import type { InteractionReplyData } from '../typings';
+import { parseMessage } from '../util/parsers';
 import { BaseInteraction, Embed } from '.';
 import FormData from 'form-data';
 
@@ -42,10 +43,7 @@ export class Interaction extends BaseInteraction {
             delete data.files;
         }
         return this.rawReply({
-            data: {
-                ...data,
-                embeds: data.embeds?.map((e) => e instanceof Embed ? e.toJSON() : e)
-            },
+            data: parseMessage(data),
             type: InteractionResponseType.ChannelMessageWithSource
         }, files);
     }
