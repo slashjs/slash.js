@@ -15,7 +15,7 @@
     "build": "tsc",
     "build:watch": "tsc -w",
     "prepare": "husky install",
-    "postinstall": "npm run build"
+    "install": "npm run build"
   },
   "author": "Drylozu",
   "contributors": [
