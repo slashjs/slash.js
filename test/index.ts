@@ -84,9 +84,10 @@ server
       interaction.reply({
         content: interaction.target.username
       });
-    }
-    else {
-      interaction;
+    } else if (interaction.isMessageContext()) {
+      interaction.reply({
+        content: interaction.target.content
+      });
     }
   });
 

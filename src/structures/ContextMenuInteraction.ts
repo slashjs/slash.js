@@ -5,18 +5,16 @@ import {
     APIUserApplicationCommandInteraction,
     APIMessageApplicationCommandInteractionData,
     APIUserApplicationCommandInteractionData,
-    APIUser,
-    APIMessage,
-    ApplicationCommandType
+    APIUser, APIMessage, ApplicationCommandType
 } from 'discord-api-types';
 import { BaseCommandInteraction } from '.';
 import { FastifyReply } from 'fastify';
 import { Server } from '../Server';
 
-export class ContextMenuInteraction<T extends 'user' | 'message' = 'user'> extends BaseCommandInteraction {
+export class ContextMenuInteraction extends BaseCommandInteraction {
     public readonly resolved: APIUserApplicationCommandInteractionDataResolved | APIMessageApplicationCommandInteractionDataResolved;
     public readonly data!: APIMessageApplicationCommandInteractionData | APIUserApplicationCommandInteractionData;
-    public readonly target: T extends 'user' ? APIUser : APIMessage;
+    public readonly target: APIUser | APIMessage;
 
     constructor(client: Server, data: APIMessageApplicationCommandInteraction | APIUserApplicationCommandInteraction, reply: FastifyReply) {
         super(client, data, reply);
@@ -27,11 +25,19 @@ export class ContextMenuInteraction<T extends 'user' | 'message' = 'user'> exten
             : this.resolved.messages[data.data.target_id]) as typeof this['target'];
     }
 
-    public isUserContext(): this is ContextMenuInteraction<'user'> {
+    public isUserContext(): this is UserContextInteraction {
         return this.data.type === ApplicationCommandType.User;
     }
 
-    public isMessageContext(): this is ContextMenuInteraction<'message'> {
+    public isMessageContext(): this is MessageContextInteraction {
         return this.data.type === ApplicationCommandType.Message;
     }
 }
+
+type UserContextInteraction = ContextMenuInteraction & {
+    readonly target: APIUser;
+};
+
+type MessageContextInteraction = ContextMenuInteraction & {
+    readonly target: APIMessage;
+};
