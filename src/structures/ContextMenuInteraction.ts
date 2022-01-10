@@ -19,10 +19,10 @@ export class ContextMenuInteraction extends BaseCommandInteraction {
     constructor(client: Server, data: APIMessageApplicationCommandInteraction | APIUserApplicationCommandInteraction, reply: FastifyReply) {
         super(client, data, reply);
 
-        this.resolved = (data.data.resolved ?? {}) as typeof this['resolved'];
+        this.resolved = (data.data.resolved ?? {});
         this.target = ('users' in this.resolved
             ? this.resolved.users[data.data.target_id]
-            : this.resolved.messages[data.data.target_id]) as typeof this['target'];
+            : this.resolved.messages[data.data.target_id]);
     }
 
     public isUserContext(): this is UserContextInteraction {
