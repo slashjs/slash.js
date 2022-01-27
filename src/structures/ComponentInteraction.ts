@@ -28,6 +28,8 @@ export class ComponentInteraction extends Interaction {
     public deferUpdate(): Promise<void> {
         if (this.deferred) throw new Error('Interaction already deferred.');
         this.deferred = true;
+        if (!this.res) throw new Error('Reply called on an interaction that has no response.');
+        if (this.res.sent || this.sending) throw new Error('Interaction already replied.');
         return this.rawReply({
             type: InteractionResponseType.DeferredMessageUpdate
         });
@@ -36,7 +38,7 @@ export class ComponentInteraction extends Interaction {
     public update(data: InteractionReplyData): Promise<void> {
         if (!data || Array.isArray(data) || typeof data !== 'object') throw new TypeError('data must be an object');
         if (!this.res) throw new Error('Reply called on an interaction that has no response.');
-        if (this.res.sent) throw new Error('Interaction already replied.');
+        if (this.res.sent || this.sending) throw new Error('Interaction already replied.');
         return this.rawReply({
             data: parseMessage(data),
             type: InteractionResponseType.UpdateMessage
