@@ -94,4 +94,11 @@ export class Interaction extends BaseInteraction {
             type: InteractionResponseType.DeferredChannelMessageWithSource
         });
     }
+
+    public async followUp(data: InteractionReplyData): Promise<APIMessage> {
+        if (this.sending) await this.sending;
+        if (!this.res.sent) throw new Error('Interaction can not be followed up.');
+        return this.client.rest.interaction.createFollowupMessage(this.applicationId, this.token, data);
+    }
+
 }

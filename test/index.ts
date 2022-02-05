@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-import { ApplicationCommandOptionType } from 'discord-api-types';
+import { ApplicationCommandOptionType, MessageFlags } from 'discord-api-types';
 import { Server } from '../src';
 import { Embed } from '../src/structures/Embed';
 
@@ -18,6 +18,15 @@ server
   // .on('raw', console.log)
   .on('command', async (command) => {
     switch (command.name) {
+      case 'autocomplete': {
+        command.reply({
+          content: 'xd',
+        });
+        command.followUp({
+          content: 'xdd',
+          flags: MessageFlags.Ephemeral,
+        });
+      } break;
       case 'test':
         await command.reply({
           content: 'slash.js ufff'
