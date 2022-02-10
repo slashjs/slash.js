@@ -9,7 +9,8 @@ const server = new Server({
   path: '/',
   publicKey: process.env.PUBLIC_KEY as string,
   token: process.env.BOT_TOKEN as string,
-  autoStart: false
+  autoStart: false,
+  port: 3000, // default port
 });
 
 server
